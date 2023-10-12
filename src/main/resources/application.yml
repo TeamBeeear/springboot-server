@@ -8,3 +8,6 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
   profiles:
     include: deploy
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
