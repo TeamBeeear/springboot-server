@@ -24,4 +24,9 @@ public class PostTestController {
         if(result == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/test/hello")
+    public String basicTest() {
+        return "test success";
+    }
 }
