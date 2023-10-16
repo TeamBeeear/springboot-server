@@ -1,4 +1,4 @@
-package com.project.gomgom.test;
+package com.project.gomgom.test.post;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

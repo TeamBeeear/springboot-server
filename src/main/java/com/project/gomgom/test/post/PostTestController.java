@@ -1,4 +1,4 @@
-package com.project.gomgom.test;
+package com.project.gomgom.test.post;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

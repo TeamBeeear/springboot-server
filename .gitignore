@@ -35,6 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-### deploy
-src/main/resources/application-deploy.yml

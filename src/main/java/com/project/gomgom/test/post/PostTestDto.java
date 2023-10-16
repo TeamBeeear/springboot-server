@@ -1,4 +1,4 @@
-package com.project.gomgom.test;
+package com.project.gomgom.test.post;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
