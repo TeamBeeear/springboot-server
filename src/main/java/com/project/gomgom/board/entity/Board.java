@@ -1,4 +1,4 @@
-package com.project.gomgom.board;
+package com.project.gomgom.board.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.project.gomgom.heart;
+package com.project.gomgom.heart.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
