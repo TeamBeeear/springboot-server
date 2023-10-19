@@ -1,10 +1,11 @@
 package com.project.gomgom.vote.entity;
 
+import com.project.gomgom.selection.entity.Selection;
+import com.project.gomgom.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity
@@ -19,10 +20,12 @@ public class Vote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long voteId;
 
-    @Column(name = "user_id")
-    private String userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(name = "selection_id")
-    private Long selectionId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "selection_id")
+    private Selection selection;
 
 }

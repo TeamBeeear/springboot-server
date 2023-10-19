@@ -1,10 +1,13 @@
 package com.project.gomgom.mediaimage.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.project.gomgom.comment.entity.Comment;
+import com.project.gomgom.selection.entity.Selection;
+import com.project.gomgom.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Getter
@@ -27,5 +30,17 @@ public class MediaImage {
 
     @Column(name = "file_path", columnDefinition = "TEXT")
     private String filePath;
+
+    @OneToOne(mappedBy = "image")
+    @JsonIgnoreProperties({"image"})
+    private User user;
+
+    @OneToOne(mappedBy = "image")
+    @JsonIgnoreProperties({"image"})
+    private Comment comment;
+
+    @OneToOne(mappedBy = "image")
+    @JsonIgnoreProperties({"image"})
+    private Selection selection;
 
 }

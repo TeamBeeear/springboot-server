@@ -1,11 +1,14 @@
 package com.project.gomgom.selection.entity;
 
+import com.project.gomgom.mediaimage.entity.MediaImage;
+import com.project.gomgom.vote.entity.Vote;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,8 +22,9 @@ public class Selection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "image_id")
-    private Long imageId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id")
+    private MediaImage image;
 
     @Column(name = "content")
     private String content;
@@ -30,5 +34,8 @@ public class Selection {
 
     @Column(name = "vote_percentage")
     private String votePercentage;
+
+    @OneToMany(mappedBy = "selection", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Vote> votes = new ArrayList<>();
 
 }
