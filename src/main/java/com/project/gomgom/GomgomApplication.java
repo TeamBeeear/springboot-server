@@ -21,18 +21,16 @@ public class GomgomApplication {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin(); // 트랜잭션 시작
 
-		System.out.println("Transaction start");
-
 		try {
 
 			tx.commit();
-			System.out.println("try end!");
+			System.out.println("try!");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			System.out.println("catch");
+			System.out.println("catch!");
 			tx.rollback();
 		} finally {
-			System.out.println("finally");
+			System.out.println("finally!");
 			em.close();
 		}
 		emf.close();
