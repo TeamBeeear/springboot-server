@@ -20,7 +20,7 @@ public class Selection {
 
     @Id @Column(name = "selection_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long selectionId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")

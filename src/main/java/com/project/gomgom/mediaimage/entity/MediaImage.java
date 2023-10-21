@@ -20,7 +20,7 @@ public class MediaImage {
 
     @Id @Column(name = "image_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long imageId;
 
     @Column(name = "origin_file_name", columnDefinition = "TEXT")
     private String originFileName;
