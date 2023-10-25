@@ -1,26 +1,29 @@
 package com.project.gomgom.board.controller;
 
 import com.project.gomgom.board.dto.BoardDto;
-import com.project.gomgom.board.service.BoardService;
+import com.project.gomgom.board.service.BoardServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.Collection;
 
 @RestController
-@RequestMapping
+@RequestMapping("board")
 @RequiredArgsConstructor
 public class BoardController {
 
-    private final BoardService boardService;
+    private final BoardServiceImpl boardServiceImpl;
 
-    @PostMapping("board")
+    @PostMapping
     public ResponseEntity<String> createBoard(@RequestBody BoardDto boardDto) {
-        BoardDto result = boardService.createBoard(boardDto);
+        BoardDto result = boardServiceImpl.createBoard(boardDto);
         return ResponseEntity.status(HttpStatus.OK).body("게시판 생성");
+    }
+
+    @GetMapping
+    public ResponseEntity<Collection<BoardDto>> readBoardAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(boardServiceImpl.readAllBoard());
     }
 
 }
