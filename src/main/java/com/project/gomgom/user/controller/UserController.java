@@ -22,10 +22,10 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("signup")
-    public ResponseEntity<String> signup(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> signup(@RequestBody UserDto userDto) {
         try {
             UserDto result = userService.signup(userDto);
-            return ResponseEntity.status(HttpStatus.OK).body(result.getUserId());
+            return ResponseEntity.status(HttpStatus.OK).body(result);
         } catch (EntityExistsException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 존재하는 아이디입니다.");
         } catch (Exception e) {
@@ -34,10 +34,10 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> login(@RequestBody UserDto userDto) {
         try {
             UserDto result = userService.login(userDto);
-            return ResponseEntity.status(HttpStatus.OK).body(result.getUserId());
+            return ResponseEntity.status(HttpStatus.OK).body(result.passwordMasked());
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("존재하지 않는 아이디입니다.");
         } catch (Exception e) {
