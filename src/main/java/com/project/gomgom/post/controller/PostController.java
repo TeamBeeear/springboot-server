@@ -4,6 +4,7 @@ import com.project.gomgom.post.dto.PostDto;
 import com.project.gomgom.post.entity.Post;
 import com.project.gomgom.post.service.PostServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,8 @@ public class PostController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("게시판이 존재하지 않습니다.");
         } catch (ClassNotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("사용자가 존재하지 않습니다.");
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("선택지 내용이 비었습니다.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("서버 오류가 발생했습니다.");
         }
