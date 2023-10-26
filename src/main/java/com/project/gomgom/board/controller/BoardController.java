@@ -2,6 +2,7 @@ package com.project.gomgom.board.controller;
 
 import com.project.gomgom.board.dto.BoardDto;
 import com.project.gomgom.board.service.BoardServiceImpl;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
+@Api(value = "Board Controller")
 public class BoardController {
 
     private final BoardServiceImpl boardServiceImpl;
