@@ -2,7 +2,6 @@ package com.project.gomgom.board.entity;
 
 import com.project.gomgom.post.entity.Post;
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

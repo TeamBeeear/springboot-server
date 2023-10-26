@@ -3,10 +3,8 @@ package com.project.gomgom.board.service;
 import com.project.gomgom.board.dto.BoardDto;
 import com.project.gomgom.board.entity.Board;
 import com.project.gomgom.board.repository.BoardRepository;
-import com.project.gomgom.post.entity.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

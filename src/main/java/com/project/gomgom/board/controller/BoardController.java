@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.Collection;
 
 @RestController
 @RequestMapping
@@ -16,14 +15,25 @@ public class BoardController {
     private final BoardServiceImpl boardServiceImpl;
 
     @PostMapping("board")
-    public ResponseEntity<String> createBoard(@RequestBody BoardDto boardDto) {
-        BoardDto result = boardServiceImpl.createBoard(boardDto);
-        return ResponseEntity.status(HttpStatus.OK).body("게시판 생성");
+    public ResponseEntity<?> createBoard(@RequestBody BoardDto boardDto) {
+
+        try {
+            BoardDto result = boardServiceImpl.createBoard(boardDto);
+            return ResponseEntity.status(HttpStatus.OK).body("게시판 생성");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+
     }
 
     @GetMapping("board")
-    public ResponseEntity<Collection<BoardDto>> readBoardAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(boardServiceImpl.readAllBoard());
+    public ResponseEntity<?> readBoardAll() {
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(boardServiceImpl.readAllBoard());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
 }

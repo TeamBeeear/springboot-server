@@ -5,7 +5,6 @@ import com.project.gomgom.post.dto.OneCategoryResDto;
 import com.project.gomgom.post.dto.OnePostResDto;
 import com.project.gomgom.post.dto.PostDto;
 import com.project.gomgom.post.entity.Post;
-
 import java.util.Collection;
 
 public interface PostService {
