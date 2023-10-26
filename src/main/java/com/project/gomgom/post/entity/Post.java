@@ -5,10 +5,7 @@ import com.project.gomgom.comment.entity.Comment;
 import com.project.gomgom.heart.entity.Heart;
 import com.project.gomgom.selection.entity.Selection;
 import com.project.gomgom.user.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
@@ -19,6 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "POST")

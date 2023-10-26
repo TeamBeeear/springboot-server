@@ -8,6 +8,7 @@ import lombok.Setter;
 public class PostDto {
     private String title;
     private String content;
+    private String userId;
     private Long boardId;
     private String firstSelectionContent;
     private String secondSelectionContent;

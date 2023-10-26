@@ -1,14 +1,13 @@
 package com.project.gomgom.post.service;
 
-import com.project.gomgom.post.repository.PostRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.project.gomgom.post.dto.PostDto;
+import com.project.gomgom.post.entity.Post;
 
-@Service
-@RequiredArgsConstructor
-public class PostService {
+import java.util.Collection;
 
-    private final PostRepository postRepository;
-
-    
+public interface PostService {
+    Post createPost(PostDto postDto) throws ClassNotFoundException;
+    Collection<PostDto> readPost(Long boardId, Long postId);
+    Collection<PostDto> readAllPost();
+    Collection<PostDto> readCategoryPost(Long boardId);
 }

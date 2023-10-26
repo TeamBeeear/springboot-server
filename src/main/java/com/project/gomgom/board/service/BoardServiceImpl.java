@@ -34,7 +34,7 @@ public class BoardServiceImpl implements BoardService {
     public Collection<BoardDto> readAllBoard() {
         List<BoardDto> boardDtoList = new ArrayList<>();
         boardRepository.findAll().forEach((board) -> boardDtoList.add(new BoardDto(
-                board.getBoardName()
+                board.getBoardId(), board.getBoardName()
         )));
 
         return boardDtoList;
