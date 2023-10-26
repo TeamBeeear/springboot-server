@@ -20,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "POST")
+@ToString
 @EntityListeners(AuditingEntityListener.class)
 public class Post {
 

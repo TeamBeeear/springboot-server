@@ -1,6 +1,9 @@
 package com.project.gomgom.post.service;
 
 import com.project.gomgom.board.repository.BoardRepository;
+import com.project.gomgom.post.dto.AllCategoryResDto;
+import com.project.gomgom.post.dto.OneCategoryResDto;
+import com.project.gomgom.post.dto.OnePostResDto;
 import com.project.gomgom.post.dto.PostDto;
 import com.project.gomgom.post.entity.Post;
 import com.project.gomgom.post.repository.PostRepository;
@@ -8,13 +11,13 @@ import com.project.gomgom.selection.entity.Selection;
 import com.project.gomgom.selection.repository.SelectionRepository;
 import com.project.gomgom.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.NotReadablePropertyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityExistsException;
+import javax.persistence.NoResultException;
 import java.util.Collection;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -78,24 +81,75 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public Collection<PostDto> readPost(Long boardId, Long postId) {
+    public OnePostResDto readPost(Long boardId, Long postId) {
 
         // boardId 검증
+        if (!boardRepository.findById(boardId).isPresent()) {
+            throw new NoResultException("게시판이 존재하지 않습니다.");
+        }
 
         // postId 검증
+        if (!postRepository.findById(postId).isPresent()) {
+            throw new NoSuchElementException("게시글이 존재하지 않습니다.");
+        }
 
-        return null;
+        // post 찾기
+        Post gotPost = postRepository.findById(postId).get();
+
+        // ** 추후에 댓글 개수, 좋아요 개수 추가하기 **
+        return OnePostResDto.builder()
+                .postId(postId)
+                .userId(gotPost.getUser().getUserId())
+                .title(gotPost.getTitle())
+                .content(gotPost.getContent())
+                .firstSelectionId(gotPost.getFirstSelection().getSelectionId())
+                .firstSelectionContent(gotPost.getFirstSelection().getContent())
+                .firstSelectionVotePercentage(gotPost.getFirstSelection().getVotePercentage())
+                .secondSelectionId(gotPost.getSecondSelection().getSelectionId())
+                .secondSelectionContent(gotPost.getSecondSelection().getContent())
+                .secondSelectionVotePercentage(gotPost.getSecondSelection().getVotePercentage())
+                .comments(gotPost.getComments())
+                .build();
     }
 
     @Override
-    public Collection<PostDto> readAllPost() {
-        return null;
-    }
+    public Collection<OneCategoryResDto> readCategoryPost(Long boardId) {
 
-    @Override
-    public Collection<PostDto> readCategoryPost(Long boardId) {
         // boardId 검증
+        if(!boardRepository.findById(boardId).isPresent()) {
+            throw new NoResultException("게시판이 존재하지 않습니다.");
+        }
 
-        return null;
+        return postRepository.findPostsByBoardId(boardId);
+
+    }
+
+    @Override
+    public Collection<AllCategoryResDto> readAllPost() {
+
+        List<Post> posts = postRepository.findAll();
+        List<AllCategoryResDto> result = posts.stream()
+                .map(post -> AllCategoryResDto.builder()
+                        .postId(post.getPostId())
+                        .userId(post.getUser().getUserId())
+                        .title(post.getTitle())
+                        .content(post.getContent())
+                        .firstSelectionId(post.getFirstSelection().getSelectionId())
+                        .firstSelectionContent(post.getFirstSelection().getContent())
+                        .firstSelectionVotePercentage(post.getFirstSelection().getVotePercentage())
+                        .secondSelectionId(post.getSecondSelection().getSelectionId())
+                        .secondSelectionContent(post.getSecondSelection().getContent())
+                        .secondSelectionVotePercentage(post.getSecondSelection().getVotePercentage())
+                        .commentsCount((long) post.getComments().size())
+                        .heartsCount((long) post.getHearts().size())
+                        .build())
+                .collect(Collectors.toList());
+
+        if(result.size() == 0) {
+            throw new NoResultException("작성된 글이 없습니다.");
+        }
+
+        return result;
+
     }
 }

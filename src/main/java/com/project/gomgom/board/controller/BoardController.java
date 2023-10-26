@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("board")
+@RequestMapping
 @RequiredArgsConstructor
 public class BoardController {
 
     private final BoardServiceImpl boardServiceImpl;
 
-    @PostMapping
+    @PostMapping("board")
     public ResponseEntity<String> createBoard(@RequestBody BoardDto boardDto) {
         BoardDto result = boardServiceImpl.createBoard(boardDto);
         return ResponseEntity.status(HttpStatus.OK).body("게시판 생성");
     }
 
-    @GetMapping
+    @GetMapping("board")
     public ResponseEntity<Collection<BoardDto>> readBoardAll() {
         return ResponseEntity.status(HttpStatus.OK).body(boardServiceImpl.readAllBoard());
     }
