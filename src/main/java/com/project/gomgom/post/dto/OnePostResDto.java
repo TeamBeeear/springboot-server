@@ -1,5 +1,6 @@
 package com.project.gomgom.post.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.gomgom.comment.entity.Comment;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,7 +22,10 @@ public class OnePostResDto {
     private Long secondSelectionId;
     private String secondSelectionContent;
     private String secondSelectionVotePercentage;
+
+    @JsonIgnore
     private Collection<Comment> comments;
+
     private Long commentsCount;
     private Long heartsCount;
 }

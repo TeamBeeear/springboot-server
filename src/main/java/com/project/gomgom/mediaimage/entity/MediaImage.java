@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -42,5 +43,31 @@ public class MediaImage {
     @OneToOne(mappedBy = "image")
     @JsonIgnoreProperties({"image"})
     private Selection selection;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MediaImage that = (MediaImage) o;
+        return Objects.equals(imageId, that.imageId) && Objects.equals(originFileName, that.originFileName) && Objects.equals(fileName, that.fileName) && Objects.equals(filePath, that.filePath) && Objects.equals(user, that.user) && Objects.equals(comment, that.comment) && Objects.equals(selection, that.selection);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(imageId, originFileName, fileName, filePath, user, comment, selection);
+    }
+
+    @Override
+    public String toString() {
+        return "MediaImage{" +
+                "imageId=" + imageId +
+                ", originFileName='" + originFileName + '\'' +
+                ", fileName='" + fileName + '\'' +
+                ", filePath='" + filePath + '\'' +
+                ", user=" + user +
+                ", comment=" + comment +
+                ", selection=" + selection +
+                '}';
+    }
 
 }

@@ -131,6 +131,7 @@ public class PostServiceImpl implements PostService{
         List<AllCategoryResDto> result = posts.stream()
                 .map(post -> AllCategoryResDto.builder()
                         .postId(post.getPostId())
+                        .boardId(post.getBoard().getBoardId())
                         .userId(post.getUser().getUserId())
                         .title(post.getTitle())
                         .content(post.getContent())

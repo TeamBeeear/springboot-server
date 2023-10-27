@@ -1,5 +1,6 @@
 package com.project.gomgom.selection.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.gomgom.mediaimage.entity.MediaImage;
 import com.project.gomgom.vote.entity.Vote;
 import lombok.*;
@@ -7,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -21,6 +23,7 @@ public class Selection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long selectionId;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
     private MediaImage image;
@@ -34,7 +37,33 @@ public class Selection {
     @Column(name = "vote_percentage")
     private String votePercentage;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "selection", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Vote> votes = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Selection selection = (Selection) o;
+        return Objects.equals(selectionId, selection.selectionId) && Objects.equals(image, selection.image) && Objects.equals(content, selection.content) && Objects.equals(voteCount, selection.voteCount) && Objects.equals(votePercentage, selection.votePercentage) && Objects.equals(votes, selection.votes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(selectionId, image, content, voteCount, votePercentage, votes);
+    }
+
+    @Override
+    public String toString() {
+        return "Selection{" +
+                "selectionId=" + selectionId +
+                ", image=" + image +
+                ", content='" + content + '\'' +
+                ", voteCount=" + voteCount +
+                ", votePercentage='" + votePercentage + '\'' +
+                ", votes=" + votes +
+                '}';
+    }
 
 }
