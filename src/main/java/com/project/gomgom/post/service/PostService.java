@@ -8,7 +8,7 @@ import com.project.gomgom.post.entity.Post;
 import java.util.Collection;
 
 public interface PostService {
-    Post createPost(PostDto postDto) throws ClassNotFoundException;
+    Post createPost(PostDto postDto);
     OnePostResDto readPost(Long boardId, Long postId);
     Collection<OneCategoryResDto> readCategoryPost(Long boardId);
     Collection<AllCategoryResDto> readAllPost();

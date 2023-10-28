@@ -10,13 +10,12 @@ import com.project.gomgom.post.repository.PostRepository;
 import com.project.gomgom.selection.entity.Selection;
 import com.project.gomgom.selection.repository.SelectionRepository;
 import com.project.gomgom.user.repository.UserRepository;
+import com.project.gomgom.util.exception.CustomException;
+import com.project.gomgom.util.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import javax.persistence.NoResultException;
 import java.util.Collection;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,21 +28,39 @@ public class PostServiceImpl implements PostService{
     private final SelectionRepository selectionRepository;
 
     @Override
-    public Post createPost(PostDto postDto) throws ClassNotFoundException {
+    public Post createPost(PostDto postDto) {
 
-        // board 연관관계 고려
+        // board 가 존재하지 않는 경우
         if (!boardRepository.findById(postDto.getBoardId()).isPresent()) {
-            throw new NoSuchElementException("게시판이 존재하지 않습니다.");
+            throw new CustomException(ErrorCode.BOARD_NOT_FOUND);
         }
 
-        // user 연관관계 고려
+        // user 가 존재하지 않는 경우
         if (!userRepository.findById(postDto.getUserId()).isPresent()) {
-            throw new ClassNotFoundException("해당 유저가 존재하지 않습니다.");
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
 
-        // selection 고려
-        if (postDto.getFirstSelectionContent().equals("")) {
-            throw new EmptyResultDataAccessException(0);
+        // selection 에 값이 없는 경우
+        if (postDto.getFirstSelectionContent() == null
+                || postDto.getFirstSelectionContent().isEmpty()
+                || postDto.getFirstSelectionContent().isBlank()) {
+            throw new CustomException(ErrorCode.BAD_FIRST_SELECTION);
+        }
+
+        if (postDto.getSecondSelectionContent() == null
+                || postDto.getSecondSelectionContent().isEmpty()
+                || postDto.getSecondSelectionContent().isBlank()) {
+            throw new CustomException(ErrorCode.BAD_SECOND_SELECTION);
+        }
+
+        // post title 이 없는 경우
+        if(postDto.getTitle() == null || postDto.getTitle().isEmpty() || postDto.getTitle().isBlank()) {
+            throw new CustomException(ErrorCode.BAD_POST_TITLE);
+        }
+
+        // post content 가 없는 경우
+        if (postDto.getContent() == null || postDto.getContent().isEmpty() || postDto.getContent().isBlank()) {
+            throw new CustomException(ErrorCode.BAD_POST_CONTENT);
         }
 
         // selection 저장
@@ -62,7 +79,7 @@ public class PostServiceImpl implements PostService{
         Selection firstSelection = selectionRepository.save(newSelection1);
         Selection secondSelection = selectionRepository.save(newSelection2);
 
-        // 포스트 생성
+        // post 생성
         Post newPost = Post.builder()
                 .title(postDto.getTitle())
                 .content(postDto.getContent())
@@ -83,20 +100,25 @@ public class PostServiceImpl implements PostService{
     @Override
     public OnePostResDto readPost(Long boardId, Long postId) {
 
-        // boardId 검증
+        // board 가 존재하지 않는 경우
         if (!boardRepository.findById(boardId).isPresent()) {
-            throw new NoResultException("게시판이 존재하지 않습니다.");
+            throw new CustomException(ErrorCode.BOARD_NOT_FOUND);
         }
 
-        // postId 검증
+        // post 가 존재하지 않는 경우
         if (!postRepository.findById(postId).isPresent()) {
-            throw new NoSuchElementException("게시글이 존재하지 않습니다.");
+            throw new CustomException(ErrorCode.POST_NOT_FOUND);
         }
 
         // post 찾기
         Post gotPost = postRepository.findById(postId).get();
 
-        // ** 추후에 댓글 개수, 좋아요 개수 추가하기 **
+        // post 가 board 에 속해있는지 검증
+        if (gotPost.getBoard().getBoardId() != boardId) {
+            throw new CustomException(ErrorCode.NOT_MATCH_POST_BOARD);
+        }
+
+        // ** 추후에 좋아요 개수 추가하기 **
         return OnePostResDto.builder()
                 .postId(postId)
                 .userId(gotPost.getUser().getUserId())
@@ -111,14 +133,15 @@ public class PostServiceImpl implements PostService{
                 .comments(gotPost.getComments())
                 .commentsCount(gotPost.getComments().stream().count())
                 .build();
+
     }
 
     @Override
     public Collection<OneCategoryResDto> readCategoryPost(Long boardId) {
 
-        // boardId 검증
+        // board 가 존재하지 않는 경우
         if(!boardRepository.findById(boardId).isPresent()) {
-            throw new NoResultException("게시판이 존재하지 않습니다.");
+            throw new CustomException(ErrorCode.BOARD_NOT_FOUND);
         }
 
         return postRepository.findPostsByBoardId(boardId);
@@ -147,11 +170,13 @@ public class PostServiceImpl implements PostService{
                         .build())
                 .collect(Collectors.toList());
 
+        // 게시판에 작성된 글이 없는 경우
         if(result.size() == 0) {
-            throw new NoResultException("작성된 글이 없습니다.");
+            throw new CustomException(ErrorCode.BOARD_EMPTY);
         }
 
         return result;
 
     }
+
 }
