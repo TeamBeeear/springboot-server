@@ -13,6 +13,7 @@ import java.util.Collection;
 public class OnePostResDto {
 
     private Long postId;
+    private Long boardId;
     private String userId;
     private String title;
     private String content;

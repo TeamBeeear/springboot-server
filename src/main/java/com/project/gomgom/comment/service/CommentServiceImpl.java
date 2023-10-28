@@ -1,5 +1,6 @@
 package com.project.gomgom.comment.service;
 
+import com.project.gomgom.board.repository.BoardRepository;
 import com.project.gomgom.comment.dto.CommentReqDto;
 import com.project.gomgom.comment.dto.CommentResDto;
 import com.project.gomgom.comment.entity.Comment;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService{
 
+    private final BoardRepository boardRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
@@ -58,14 +60,26 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public Collection<CommentResDto> readComments(Long postId) {
+    public Collection<CommentResDto> readComments(Long boardId, Long postId) {
+
+        // board 가 존재하지 않는 경우
+        if (!boardRepository.findById(boardId).isPresent()) {
+            throw new CustomException(ErrorCode.BOARD_NOT_FOUND);
+        }
 
         // post 가 존재하지 않는 경우
         if (!postRepository.findById(postId).isPresent()) {
             throw new CustomException(ErrorCode.POST_NOT_FOUND);
         }
 
+        // post 찾기
         Post gotPost = postRepository.findById(postId).get();
+
+        // post 가 board 에 속해있는지 검증
+        if (gotPost.getBoard().getBoardId() != boardId) {
+            throw new CustomException(ErrorCode.NOT_MATCH_POST_BOARD);
+        }
+
         List<Comment> comments = gotPost.getComments();
         List<CommentResDto> result = new ArrayList<>();
         for(Comment comment: comments) {

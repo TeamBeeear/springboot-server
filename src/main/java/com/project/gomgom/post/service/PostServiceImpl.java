@@ -121,6 +121,7 @@ public class PostServiceImpl implements PostService{
         // ** 추후에 좋아요 개수 추가하기 **
         return OnePostResDto.builder()
                 .postId(postId)
+                .boardId(boardId)
                 .userId(gotPost.getUser().getUserId())
                 .title(gotPost.getTitle())
                 .content(gotPost.getContent())
@@ -132,6 +133,7 @@ public class PostServiceImpl implements PostService{
                 .secondSelectionVotePercentage(gotPost.getSecondSelection().getVotePercentage())
                 .comments(gotPost.getComments())
                 .commentsCount(gotPost.getComments().stream().count())
+                .heartsCount(0L)
                 .build();
 
     }

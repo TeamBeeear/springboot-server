@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping("test")
 public class TestController {
 
-    @GetMapping("/test/string")
+    @GetMapping("string")
     public String basicTest() {
         return "test success";
     }
 
-    @GetMapping("/test/response-entity")
+    @GetMapping("response-entity")
     public ResponseEntity<?> basicResponseEntityTest() {
         return ResponseEntity.status(HttpStatus.OK).body("Response Entity 를 반환으로 하는 API 테스트 성공");
     }

@@ -23,9 +23,9 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).body("댓글이 정상적으로 등록되었습니다.");
     }
 
-    @GetMapping("{postId}")
-    public ResponseEntity<?> readComments(@PathVariable("postId") Long postId) {
-        Collection<CommentResDto> result = commentService.readComments(postId);
+    @GetMapping("{boardId}/{postId}")
+    public ResponseEntity<?> readComments(@PathVariable("boardId") Long boardId, @PathVariable("postId") Long postId) {
+        Collection<CommentResDto> result = commentService.readComments(boardId, postId);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 

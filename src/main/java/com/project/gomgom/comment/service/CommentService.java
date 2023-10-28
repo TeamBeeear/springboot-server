@@ -8,5 +8,5 @@ import java.util.Collection;
 
 public interface CommentService {
     Comment createComment(CommentReqDto commentReqDto);
-    Collection<CommentResDto> readComments(Long postId);
+    Collection<CommentResDto> readComments(Long boardId, Long postId);
 }
