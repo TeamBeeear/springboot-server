@@ -25,7 +25,10 @@ public enum ErrorCode {
     BAD_POST_CONTENT(HttpStatus.BAD_REQUEST, "게시글에 내용이 없습니다."), // 400
     BAD_POST_TITLE(HttpStatus.BAD_REQUEST, "게시글에 제목이 없습니다."), // 400
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다."), // 404
-    NOT_MATCH_POST_BOARD(HttpStatus.BAD_REQUEST, "게시판과 게시글 매칭 오류가 발생하였습니다."); // 400
+    NOT_MATCH_POST_BOARD(HttpStatus.BAD_REQUEST, "게시판과 게시글 매칭 오류가 발생하였습니다."), // 400
+
+    // 댓글
+    BAD_COMMENT_CONTENT(HttpStatus.BAD_REQUEST, "댓글에 내용이 없습니다."); // 400
 
     private final HttpStatus httpStatus;
     private final String message;

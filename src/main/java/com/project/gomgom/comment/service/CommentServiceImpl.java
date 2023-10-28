@@ -7,14 +7,13 @@ import com.project.gomgom.comment.repository.CommentRepository;
 import com.project.gomgom.post.entity.Post;
 import com.project.gomgom.post.repository.PostRepository;
 import com.project.gomgom.user.repository.UserRepository;
+import com.project.gomgom.util.exception.CustomException;
+import com.project.gomgom.util.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.NotAcceptableStatusException;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -27,19 +26,21 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public Comment createComment(CommentReqDto commentReqDto) {
 
-        // post 검증
+        // post 가 존재하지 않는 경우
         if (!postRepository.findById(commentReqDto.getPostId()).isPresent()) {
-            throw new RuntimeException("게시글이 존재하지 않습니다.");
+            throw new CustomException(ErrorCode.POST_NOT_FOUND);
         }
 
-        // user 검증
+        // user 가 존재하지 않는 경우
         if (!userRepository.findById(commentReqDto.getUserId()).isPresent()) {
-            throw new NoSuchElementException("유저가 존재하지 않습니다.");
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
 
-        // comment 검증
-        if (commentReqDto.getContent().equals("") || commentReqDto.getContent() == null) {
-            throw new NotAcceptableStatusException("댓글이 존재하지 않습니다.");
+        // comment 가 없거나 비어있는 경우
+        if (commentReqDto.getContent() == null
+                || commentReqDto.getContent().isEmpty()
+                || commentReqDto.getContent().isBlank()) {
+            throw new CustomException(ErrorCode.BAD_COMMENT_CONTENT);
         }
 
         // comment 생성
@@ -59,8 +60,9 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public Collection<CommentResDto> readComments(Long postId) {
 
+        // post 가 존재하지 않는 경우
         if (!postRepository.findById(postId).isPresent()) {
-            throw new NoSuchElementException("게시글이 존재하지 않습니다.");
+            throw new CustomException(ErrorCode.POST_NOT_FOUND);
         }
 
         Post gotPost = postRepository.findById(postId).get();
