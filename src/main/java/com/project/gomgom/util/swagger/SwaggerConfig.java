@@ -1,4 +1,4 @@
-package com.project.gomgom.util;
+package com.project.gomgom.util.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

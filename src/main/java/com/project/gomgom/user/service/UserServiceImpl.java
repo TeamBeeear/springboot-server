@@ -3,12 +3,10 @@ package com.project.gomgom.user.service;
 import com.project.gomgom.user.dto.UserDto;
 import com.project.gomgom.user.entity.User;
 import com.project.gomgom.user.repository.UserRepository;
+import com.project.gomgom.util.exception.CustomException;
+import com.project.gomgom.util.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.NotAcceptableStatusException;
-
-import javax.persistence.EntityExistsException;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -25,7 +23,7 @@ public class UserServiceImpl implements UserService{
 
         // 유저가 이미 존재하는 경우 -> Exception
         if(existingUser.isPresent()) {
-            throw new EntityExistsException("이미 존재하는 아이디입니다.");
+            throw new CustomException(ErrorCode.DUPLICATE_USER);
         }
 
         // 유저가 존재하지 않는 경우 -> 정상 처리
@@ -40,7 +38,7 @@ public class UserServiceImpl implements UserService{
 
     // 로그인
     @Override
-    public UserDto login(UserDto userDto) throws Exception {
+    public UserDto login(UserDto userDto) {
 
         Optional<User> existingUser = userRepository.findById(userDto.getUserId());
 
@@ -52,10 +50,10 @@ public class UserServiceImpl implements UserService{
             if (userDto.getUserPw().equals(pw)) { // 비밀번호가 일치하는 경우
                 return userDto;
             } else { // 비밀번호가 일치하지 않는 경우
-                throw new NotAcceptableStatusException("비밀번호가 올바르지 않습니다.");
+                throw new CustomException(ErrorCode.INVALID_PASSWORD);
             }
         } else { // 유저가 존재하지 않는 경우
-            throw new NoSuchElementException("존재하지 않는 아이디입니다.");
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
 
     }
