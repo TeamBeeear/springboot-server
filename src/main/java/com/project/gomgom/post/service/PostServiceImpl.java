@@ -109,6 +109,7 @@ public class PostServiceImpl implements PostService{
                 .secondSelectionContent(gotPost.getSecondSelection().getContent())
                 .secondSelectionVotePercentage(gotPost.getSecondSelection().getVotePercentage())
                 .comments(gotPost.getComments())
+                .commentsCount(gotPost.getComments().stream().count())
                 .build();
     }
 
