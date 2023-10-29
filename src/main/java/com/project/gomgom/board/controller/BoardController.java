@@ -31,7 +31,7 @@ public class BoardController {
 
     }
 
-    @GetMapping("board")
+    @GetMapping("api/board")
     public ResponseEntity<?> readBoardAll() {
 
         try {
