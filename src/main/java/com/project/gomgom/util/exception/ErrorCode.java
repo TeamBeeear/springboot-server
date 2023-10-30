@@ -28,7 +28,11 @@ public enum ErrorCode {
     NOT_MATCH_POST_BOARD(HttpStatus.BAD_REQUEST, "게시판과 게시글 매칭 오류가 발생하였습니다."), // 400
 
     // 댓글
-    BAD_COMMENT_CONTENT(HttpStatus.BAD_REQUEST, "댓글에 내용이 없습니다."); // 400
+    BAD_COMMENT_CONTENT(HttpStatus.BAD_REQUEST, "댓글에 내용이 없습니다."), // 400
+
+    // 좋아요 기능
+    ALREADY_HEARTED(HttpStatus.BAD_REQUEST, "좋아요가 이미 눌러져 있습니다."),
+    EMPTY_HEARTED(HttpStatus.BAD_REQUEST, "좋아요가 이미 취소 상태입니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

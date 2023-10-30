@@ -3,16 +3,15 @@ package com.project.gomgom.heart.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.gomgom.post.entity.Post;
 import com.project.gomgom.user.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
 @Setter
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "HEART")

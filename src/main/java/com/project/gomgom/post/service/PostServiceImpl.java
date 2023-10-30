@@ -1,6 +1,7 @@
 package com.project.gomgom.post.service;
 
 import com.project.gomgom.board.repository.BoardRepository;
+import com.project.gomgom.heart.repository.HeartRepository;
 import com.project.gomgom.post.dto.AllCategoryResDto;
 import com.project.gomgom.post.dto.OneCategoryResDto;
 import com.project.gomgom.post.dto.OnePostResDto;
@@ -118,7 +119,7 @@ public class PostServiceImpl implements PostService{
             throw new CustomException(ErrorCode.NOT_MATCH_POST_BOARD);
         }
 
-        // ** 추후에 좋아요 개수 추가하기 **
+        // ** 좋아요 기능 추가함 **
         return OnePostResDto.builder()
                 .postId(postId)
                 .boardId(boardId)
