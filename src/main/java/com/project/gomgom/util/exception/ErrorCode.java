@@ -32,7 +32,9 @@ public enum ErrorCode {
 
     // 좋아요 기능
     ALREADY_HEARTED(HttpStatus.BAD_REQUEST, "좋아요가 이미 눌러져 있습니다."),
-    EMPTY_HEARTED(HttpStatus.BAD_REQUEST, "좋아요가 이미 취소 상태입니다.");
+    EMPTY_HEARTED(HttpStatus.BAD_REQUEST, "좋아요가 이미 취소 상태입니다."),
+
+    GOMGOM_POST_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 곰곰이의 글입니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

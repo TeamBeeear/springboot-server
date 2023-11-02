@@ -3,10 +3,7 @@ package com.project.gomgom.gomgompost.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.gomgom.comment.entity.Comment;
 import com.project.gomgom.mediaimage.entity.MediaImage;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
@@ -18,6 +15,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "GOMGOM_POST")
