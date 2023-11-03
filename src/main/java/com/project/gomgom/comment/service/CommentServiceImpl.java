@@ -10,6 +10,7 @@ import com.project.gomgom.post.repository.PostRepository;
 import com.project.gomgom.user.repository.UserRepository;
 import com.project.gomgom.util.exception.CustomException;
 import com.project.gomgom.util.exception.ErrorCode;
+import com.project.gomgom.util.formatter.TimeAgoFormatter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class CommentServiceImpl implements CommentService{
             result.add(CommentResDto.builder()
                     .userId(comment.getUser().getUserId())
                     .content(comment.getContent())
-                    .beforeNMinutes("N 분 전")
+                            .nMinutesAgo(TimeAgoFormatter.format(comment.getCreatedAt()))
                     .build());
         }
 

@@ -5,9 +5,12 @@ import com.project.gomgom.gomgompost.entity.GomgomPost;
 import com.project.gomgom.mediaimage.entity.MediaImage;
 import com.project.gomgom.post.entity.Post;
 import com.project.gomgom.user.entity.User;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
@@ -45,6 +48,11 @@ public class Comment {
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @ApiModelProperty(example = "2023-10-26 17:01:31.069860")
+    private LocalDateTime createdAt;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,6 +75,8 @@ public class Comment {
                 ", gomgomPost=" + gomgomPost +
                 ", image=" + image +
                 ", content='" + content + '\'' +
+                ", createdAt=" + createdAt +
                 '}';
     }
+
 }

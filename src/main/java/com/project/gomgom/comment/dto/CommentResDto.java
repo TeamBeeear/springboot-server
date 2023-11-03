@@ -12,5 +12,5 @@ import lombok.ToString;
 public class CommentResDto {
     private String userId;
     private String content;
-    private String beforeNMinutes;
+    private String nMinutesAgo;
 }
