@@ -8,6 +8,7 @@ import com.project.gomgom.user.entity.User;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "COMMENT")
+@EntityListeners(AuditingEntityListener.class)
 public class Comment {
 
     @Id @Column(name = "comment_id")
