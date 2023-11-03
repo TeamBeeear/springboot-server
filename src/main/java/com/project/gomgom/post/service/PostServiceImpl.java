@@ -13,6 +13,7 @@ import com.project.gomgom.selection.repository.SelectionRepository;
 import com.project.gomgom.user.repository.UserRepository;
 import com.project.gomgom.util.exception.CustomException;
 import com.project.gomgom.util.exception.ErrorCode;
+import com.project.gomgom.util.formatter.TimeAgoFormatter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
@@ -159,17 +160,14 @@ public class PostServiceImpl implements PostService{
                 .map(post -> AllCategoryResDto.builder()
                         .postId(post.getPostId())
                         .boardId(post.getBoard().getBoardId())
-                        .userId(post.getUser().getUserId())
                         .title(post.getTitle())
-                        .content(post.getContent())
-                        .firstSelectionId(post.getFirstSelection().getSelectionId())
-                        .firstSelectionContent(post.getFirstSelection().getContent())
-                        .firstSelectionVotePercentage(post.getFirstSelection().getVotePercentage())
-                        .secondSelectionId(post.getSecondSelection().getSelectionId())
-                        .secondSelectionContent(post.getSecondSelection().getContent())
-                        .secondSelectionVotePercentage(post.getSecondSelection().getVotePercentage())
                         .commentsCount((long) post.getComments().size())
                         .heartsCount((long) post.getHearts().size())
+                        .firstSelectionContent(post.getFirstSelection().getContent())
+                        .secondSelectionContent(post.getSecondSelection().getContent())
+                        .content(post.getContent())
+                        .userId(post.getUser().getUserId())
+                        .nMinutesAgo(TimeAgoFormatter.format(post.getCreatedAt()))
                         .build())
                 .collect(Collectors.toList());
 
