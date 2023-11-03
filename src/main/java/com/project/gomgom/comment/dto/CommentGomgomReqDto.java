@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class CommentReqDto {
-    private Long postId;
+public class CommentGomgomReqDto {
+    private Long gomgomPostId;
     private String userId;
     private String content;
 }
