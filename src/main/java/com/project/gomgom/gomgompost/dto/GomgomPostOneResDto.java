@@ -15,6 +15,8 @@ public class GomgomPostOneResDto {
 
     private String title;
     private String content;
+
+    @JsonIgnore
     private Collection<Comment> comments;
 
 }
