@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("heart")
+@RequestMapping("api/heart")
 public class HeartController {
 
     private final HeartServiceImpl heartService;

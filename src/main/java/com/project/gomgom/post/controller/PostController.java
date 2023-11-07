@@ -49,4 +49,11 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
+    // 마이페이지
+    @GetMapping("api/my-page")
+    public ResponseEntity<?> readMyPage(@RequestParam("id") String userId, @RequestParam("category") Long category) {
+        Collection<?> result = postServiceImpl.readMyPage(userId, category);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
 }

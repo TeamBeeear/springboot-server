@@ -12,4 +12,5 @@ public interface PostService {
     OnePostResDto readPost(Long boardId, Long postId);
     Collection<OneCategoryResDto> readCategoryPost(Long boardId);
     Collection<AllCategoryResDto> readAllPost();
+    Collection<?> readMyPage(String userId, Long category);
 }

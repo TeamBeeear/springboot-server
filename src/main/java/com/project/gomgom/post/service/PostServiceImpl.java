@@ -1,8 +1,12 @@
 package com.project.gomgom.post.service;
 
 import com.project.gomgom.board.repository.BoardRepository;
+import com.project.gomgom.comment.entity.Comment;
+import com.project.gomgom.comment.repository.CommentRepository;
+import com.project.gomgom.heart.entity.Heart;
 import com.project.gomgom.heart.repository.HeartRepository;
 import com.project.gomgom.post.dto.AllCategoryResDto;
+import com.project.gomgom.post.dto.MyPageResDto;
 import com.project.gomgom.post.dto.OneCategoryResDto;
 import com.project.gomgom.post.dto.OnePostResDto;
 import com.project.gomgom.post.dto.PostDto;
@@ -10,10 +14,16 @@ import com.project.gomgom.post.entity.Post;
 import com.project.gomgom.post.repository.PostRepository;
 import com.project.gomgom.selection.entity.Selection;
 import com.project.gomgom.selection.repository.SelectionRepository;
+import com.project.gomgom.user.entity.User;
 import com.project.gomgom.user.repository.UserRepository;
 import com.project.gomgom.util.exception.CustomException;
 import com.project.gomgom.util.exception.ErrorCode;
 import com.project.gomgom.util.formatter.TimeAgoFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
@@ -28,6 +38,8 @@ public class PostServiceImpl implements PostService{
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
     private final SelectionRepository selectionRepository;
+    private final HeartRepository heartRepository;
+    private final CommentRepository commentRepository;
 
     @Override
     public Post createPost(PostDto postDto) {
@@ -178,6 +190,106 @@ public class PostServiceImpl implements PostService{
 
         return result;
 
+    }
+
+    @Override
+    public Collection<MyPageResDto> readMyPage(String userId, Long category) {
+
+        Optional<User> existingUser = userRepository.findById(userId);
+        if (existingUser.isEmpty()) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        if(!(category >= 1 && category <= 3)) {
+            throw new CustomException(ErrorCode.CATEGORY_NOT_FOUND);
+        }
+
+        List<Post> writtenPosts = new ArrayList<>();
+        List<Heart> heartedPosts = new ArrayList<>();
+        List<Comment> commentedPosts = new ArrayList<>();
+
+        List<MyPageResDto> result = new ArrayList<>();
+
+        try {
+            // category 가 1 이면 내가 작성한 글
+            if (category == 1) {
+                writtenPosts = existingUser.get().getPosts();
+
+                // 게시글이 0 개인 경우 처리
+
+                result = writtenPosts.stream()
+                        .map(post -> MyPageResDto.builder()
+                                .postId(post.getPostId())
+                                .boardId(post.getBoard().getBoardId())
+                                .title(post.getTitle())
+                                .commentsCount((long) post.getComments().size())
+                                .heartsCount((long) post.getHearts().size())
+                                .firstSelectionContent(post.getFirstSelection().getContent())
+                                .secondSelectionContent(post.getSecondSelection().getContent())
+                                .content(post.getContent())
+                                .userId(post.getUser().getUserId())
+                                .nMinutesAgo(TimeAgoFormatter.format(post.getCreatedAt()))
+                                .build())
+                        .collect(Collectors.toList());
+            }
+
+            // category 가 2 이면 내가 공감한 글
+            else if (category == 2) {
+                heartedPosts = heartRepository.findByUser(existingUser.get());
+
+                // 게시글이 0 개인 경우 처리
+
+                for (Heart heart : heartedPosts) {
+                    Post post = heart.getPost();
+                    MyPageResDto myPageResDto = MyPageResDto.builder()
+                            .postId(post.getPostId())
+                            .boardId(post.getBoard().getBoardId())
+                            .title(post.getTitle())
+                            .commentsCount((long) post.getComments().size())
+                            .heartsCount((long) post.getHearts().size())
+                            .firstSelectionContent(post.getFirstSelection().getContent())
+                            .secondSelectionContent(post.getSecondSelection().getContent())
+                            .content(post.getContent())
+                            .userId(post.getUser().getUserId())
+                            .nMinutesAgo(TimeAgoFormatter.format(post.getCreatedAt()))
+                            .build();
+                    result.add(myPageResDto);
+                }
+            }
+
+            // category 가 3 이면 내가 댓글을 단 글
+            else if (category == 3) {
+                commentedPosts = commentRepository.findByUser(existingUser.get());
+
+                // 게시글이 0 개인 경우 처리
+
+                for (Comment comment : commentedPosts) {
+                    Post post = comment.getPost();
+                    MyPageResDto myPageResDto = MyPageResDto.builder()
+                            .postId(post.getPostId())
+                            .boardId(post.getBoard().getBoardId())
+                            .title(post.getTitle())
+                            .commentsCount((long) post.getComments().size())
+                            .heartsCount((long) post.getHearts().size())
+                            .firstSelectionContent(post.getFirstSelection().getContent())
+                            .secondSelectionContent(post.getSecondSelection().getContent())
+                            .content(post.getContent())
+                            .userId(post.getUser().getUserId())
+                            .nMinutesAgo(TimeAgoFormatter.format(post.getCreatedAt()))
+                            .build();
+                    result.add(myPageResDto);
+                }
+
+                // 게시글 중복 제거
+                Set<MyPageResDto> resultSet = new HashSet<>(result);
+                result.clear();
+                result.addAll(resultSet);
+            }
+
+        } catch (NullPointerException e) {
+            return Collections.emptyList();
+        }
+        return result;
     }
 
 }
