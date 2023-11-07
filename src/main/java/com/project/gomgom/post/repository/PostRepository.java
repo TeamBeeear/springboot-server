@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query("SELECT new com.project.gomgom.post.dto.OneCategoryResDto(p.postId, p.user.userId, p.title, p.content, " +
+    @Query("SELECT new com.project.gomgom.post.dto.OneCategoryResDto(p.postId, p.board.boardId, p.user.userId, p.title, p.content, " +
             "p.firstSelection.selectionId, p.firstSelection.content, p.firstSelection.votePercentage, " +
             "p.secondSelection.selectionId, p.secondSelection.content, p.secondSelection.votePercentage, " +
             "COUNT(c), COUNT(h)) " +

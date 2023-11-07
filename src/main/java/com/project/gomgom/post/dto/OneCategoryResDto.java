@@ -12,6 +12,7 @@ import lombok.Setter;
 public class OneCategoryResDto {
 
     private Long postId;
+    private Long boardId;
     private String userId;
     private String title;
     private String content;
