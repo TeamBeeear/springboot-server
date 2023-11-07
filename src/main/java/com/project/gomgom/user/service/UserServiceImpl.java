@@ -26,6 +26,20 @@ public class UserServiceImpl implements UserService{
             throw new CustomException(ErrorCode.DUPLICATE_USER);
         }
 
+        // id 에 값이 없는 경우
+        if (userDto.getUserId() == null
+                || userDto.getUserId().isEmpty()
+                || userDto.getUserId().isBlank()) {
+            throw new CustomException(ErrorCode.BAD_ID);
+        }
+
+        // pw 에 값이 없는 경우
+        if (userDto.getUserPw() == null
+                || userDto.getUserPw().isEmpty()
+                || userDto.getUserPw().isBlank()) {
+            throw new CustomException(ErrorCode.BAD_PASSWORD);
+        }
+
         // 유저가 존재하지 않는 경우 -> 정상 처리
         User newUser = User.builder()
                 .userId(userDto.getUserId())
@@ -41,6 +55,20 @@ public class UserServiceImpl implements UserService{
     public UserDto login(UserDto userDto) {
 
         Optional<User> existingUser = userRepository.findById(userDto.getUserId());
+
+        // id 에 값이 없는 경우
+        if (userDto.getUserId() == null
+                || userDto.getUserId().isEmpty()
+                || userDto.getUserId().isBlank()) {
+            throw new CustomException(ErrorCode.BAD_ID);
+        }
+
+        // pw 에 값이 없는 경우
+        if (userDto.getUserPw() == null
+                || userDto.getUserPw().isEmpty()
+                || userDto.getUserPw().isBlank()) {
+            throw new CustomException(ErrorCode.BAD_PASSWORD);
+        }
 
         // 유저가 존재하는 경우
         if (existingUser.isPresent()) {

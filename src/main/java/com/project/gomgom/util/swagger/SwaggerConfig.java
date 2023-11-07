@@ -19,17 +19,17 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .useDefaultResponseMessages(true)
+                .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.any()) // 모든 컨트롤러
+                .apis(RequestHandlerSelectors.basePackage("com.project.gomgom"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Gomgom SpringBoot REST API")
+                .title("REST API")
                 .version("1.0.0")
                 .description("추가 변동될 수 있음")
                 .build();

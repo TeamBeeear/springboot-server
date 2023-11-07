@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     // 유저
+    BAD_ID(HttpStatus.valueOf(421), "아이디를 입력하세요."),
+    BAD_PASSWORD(HttpStatus.valueOf(422), "비밀번호를 입력하세요"),
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "비밀번호가 올바르지 않습니다."), // 401
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 아이디입니다."), // 404
     DUPLICATE_USER(HttpStatus.CONFLICT, "이미 존재하는 아이디입니다."), // 409
