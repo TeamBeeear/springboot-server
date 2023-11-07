@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorCode {
 
+    // 빈 값
     // 유저
     BAD_ID(HttpStatus.valueOf(421), "아이디를 입력하세요."),
     BAD_PASSWORD(HttpStatus.valueOf(422), "비밀번호를 입력하세요"),

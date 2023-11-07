@@ -4,6 +4,7 @@ import com.project.gomgom.board.dto.BoardDto;
 import com.project.gomgom.board.entity.Board;
 import com.project.gomgom.board.service.BoardServiceImpl;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
-@RequestMapping
+@RequestMapping("api")
 @RequiredArgsConstructor
-@Api(value = "Board Controller")
+@Api(tags = "게시판")
 public class BoardController {
 
     private final BoardServiceImpl boardServiceImpl;
 
     @PostMapping("board")
+    @ApiOperation(value = "게시판 생성", notes = "관리자가 게시판을 생성할 때 호출합니다.")
     public ResponseEntity<?> createBoard(@RequestBody BoardDto boardDto) {
 
         try {
@@ -31,7 +33,8 @@ public class BoardController {
 
     }
 
-    @GetMapping("api/board")
+    @GetMapping("board")
+    @ApiOperation(value = "게시판 조회", notes = "생성된 게시판의 이름을 조회할 때 호출합니다.")
     public ResponseEntity<?> readBoardAll() {
 
         try {

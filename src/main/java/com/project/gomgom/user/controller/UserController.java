@@ -23,7 +23,7 @@ public class UserController {
     private final UserServiceImpl userServiceImpl;
 
     @PostMapping("signup")
-    @ApiOperation(value = "회원가입", notes = "DB에 회원 정보를 저장합니다.")
+    @ApiOperation(value = "회원가입", notes = "회원가입 시 호출합니다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "{\n"
                     + "    \"userId\": \"test7\",\n"
@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping("login")
-    @ApiOperation(value = "로그인", notes = "DB에 저장된 회원 정보로 로그인 성공 여부를 반환합니다.")
+    @ApiOperation(value = "로그인", notes = "로그인 시 호출합니다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "{\n"
                     + "    \"userId\": \"test7\",\n"
