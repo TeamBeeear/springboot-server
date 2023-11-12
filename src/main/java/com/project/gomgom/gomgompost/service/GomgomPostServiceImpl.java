@@ -38,6 +38,7 @@ public class GomgomPostServiceImpl implements GomgomPostService {
 
         for (GomgomPost post : gomgomPosts) {
             GomgomPostAllResDto postDto = new GomgomPostAllResDto();
+            postDto.setId(post.getGomgomPostId());
             postDto.setTitle(post.getTitle());
             result.add(postDto);
         }

@@ -6,5 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GomgomPostAllResDto {
+    private Long id;
     private String title;
 }
