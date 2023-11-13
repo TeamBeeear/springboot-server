@@ -13,16 +13,13 @@ public class OneCategoryResDto {
 
     private Long postId;
     private Long boardId;
-    private String userId;
     private String title;
-    private String content;
-    private Long firstSelectionId;
-    private String firstSelectionContent;
-    private String firstSelectionVotePercentage;
-    private Long secondSelectionId;
-    private String secondSelectionContent;
-    private String secondSelectionVotePercentage;
     private Long commentsCount;
     private Long heartsCount;
+    private String firstSelectionContent;
+    private String secondSelectionContent;
+    private String content;
+    private String userId;
+    private String nMinutesAgo;
 
 }

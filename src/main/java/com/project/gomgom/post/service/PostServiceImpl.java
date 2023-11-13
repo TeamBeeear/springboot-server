@@ -160,8 +160,29 @@ public class PostServiceImpl implements PostService{
             throw new CustomException(ErrorCode.BOARD_NOT_FOUND);
         }
 
-        return postRepository.findPostsByBoardId(boardId);
+        // 해당 게시판의 게시글 조회
+        List<Post> postsInCategory = postRepository.findAllByBoard_BoardId(boardId);
 
+        // 해당 카테고리에 게시글이 없는 경우 처리
+        if (postsInCategory.isEmpty()) {
+            throw new CustomException(ErrorCode.BOARD_EMPTY);
+        }
+
+        // DTO로 매핑하여 반환
+        return postsInCategory.stream()
+                .map(post -> OneCategoryResDto.builder()
+                        .postId(post.getPostId())
+                        .boardId(post.getBoard().getBoardId())
+                        .title(post.getTitle())
+                        .commentsCount((long) post.getComments().size())
+                        .heartsCount((long) post.getHearts().size())
+                        .firstSelectionContent(post.getFirstSelection().getContent())
+                        .secondSelectionContent(post.getSecondSelection().getContent())
+                        .content(post.getContent())
+                        .userId(post.getUser().getUserId())
+                        .nMinutesAgo(TimeAgoFormatter.format(post.getCreatedAt()))
+                        .build())
+                .collect(Collectors.toList());
     }
 
     @Override
