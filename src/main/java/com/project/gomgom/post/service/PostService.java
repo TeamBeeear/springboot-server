@@ -4,6 +4,7 @@ import com.project.gomgom.post.dto.AllCategoryResDto;
 import com.project.gomgom.post.dto.OneCategoryResDto;
 import com.project.gomgom.post.dto.OnePostResDto;
 import com.project.gomgom.post.dto.PostDto;
+import com.project.gomgom.post.dto.UpdateVoteDto;
 import com.project.gomgom.post.entity.Post;
 import java.util.Collection;
 
@@ -13,4 +14,5 @@ public interface PostService {
     Collection<OneCategoryResDto> readCategoryPost(Long boardId);
     Collection<AllCategoryResDto> readAllPost();
     Collection<?> readMyPage(String userId, Long category);
+    UpdateVoteDto updateVote(String userId, Long postId, Long selectionId);
 }

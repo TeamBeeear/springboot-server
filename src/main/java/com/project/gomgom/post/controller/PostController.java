@@ -4,9 +4,11 @@ import com.project.gomgom.post.dto.AllCategoryResDto;
 import com.project.gomgom.post.dto.OneCategoryResDto;
 import com.project.gomgom.post.dto.OnePostResDto;
 import com.project.gomgom.post.dto.PostDto;
+import com.project.gomgom.post.dto.UpdateVoteDto;
 import com.project.gomgom.post.entity.Post;
 import com.project.gomgom.post.service.PostServiceImpl;
 import io.swagger.annotations.*;
+import javax.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,6 +60,15 @@ public class PostController {
     @ApiOperation(value = "마이페이지", notes = "마이페이지에 접속했을 때 호출합니다.")
     public ResponseEntity<?> readMyPage(@RequestParam("id") String userId, @RequestParam("category") Long category) {
         Collection<?> result = postServiceImpl.readMyPage(userId, category);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @PutMapping("vote/{userId}/{postId}/{selectionId}")
+    @ApiOperation(value = "투표", notes = "선택지를 클릭할 때 호출합니다.")
+    public ResponseEntity<?> updateVote(@PathVariable("userId") String userId,
+                                        @PathVariable("postId") Long postId,
+                                        @PathVariable("selectionId") Long selectionId) {
+        UpdateVoteDto result = postServiceImpl.updateVote(userId, postId, selectionId);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 

@@ -10,6 +10,7 @@ import com.project.gomgom.post.dto.MyPageResDto;
 import com.project.gomgom.post.dto.OneCategoryResDto;
 import com.project.gomgom.post.dto.OnePostResDto;
 import com.project.gomgom.post.dto.PostDto;
+import com.project.gomgom.post.dto.UpdateVoteDto;
 import com.project.gomgom.post.entity.Post;
 import com.project.gomgom.post.repository.PostRepository;
 import com.project.gomgom.selection.entity.Selection;
@@ -19,6 +20,7 @@ import com.project.gomgom.user.repository.UserRepository;
 import com.project.gomgom.util.exception.CustomException;
 import com.project.gomgom.util.exception.ErrorCode;
 import com.project.gomgom.util.formatter.TimeAgoFormatter;
+import com.project.gomgom.vote.repository.VoteRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -40,6 +42,7 @@ public class PostServiceImpl implements PostService{
     private final SelectionRepository selectionRepository;
     private final HeartRepository heartRepository;
     private final CommentRepository commentRepository;
+    private final VoteRepository voteRepository;
 
     @Override
     public Post createPost(PostDto postDto) {
@@ -311,6 +314,82 @@ public class PostServiceImpl implements PostService{
             return Collections.emptyList();
         }
         return result;
+    }
+
+    @Override
+    public UpdateVoteDto updateVote(String userId, Long postId, Long selectionId) {
+
+        // 게시글 가져오기
+        Optional<Post> gotPost = postRepository.findById(postId);
+
+        if(gotPost.isEmpty()) {
+            throw new CustomException(ErrorCode.POST_NOT_FOUND);
+        }
+
+        Post existingPost = gotPost.get();
+
+        // 게시글의 총 투표 수 update
+        existingPost.setTotalVote(existingPost.getTotalVote() + 1);
+        postRepository.save(existingPost);
+
+        // 총 투표 수 가져오기
+        Long totalVote = existingPost.getTotalVote();
+
+        // 선택지
+        if(selectionId % 2 == 1) { // 클릭한 선택지가 홀수이면
+            Selection firstSelection = selectionRepository.findById(selectionId).get();
+            Selection secondSelection = selectionRepository.findById(selectionId + 1).get();
+
+            // 첫번째 선택지 update
+            firstSelection.setVoteCount(firstSelection.getVoteCount() + 1);
+
+            // 첫번째 선택지의 투표 비율 계산
+            double firstSelectionPercentage = (double)firstSelection.getVoteCount() / totalVote * 100;
+            firstSelection.setVotePercentage(String.format("%.2f%%", firstSelectionPercentage));
+
+            // 두번째 선택지 update
+            double secondSelectionPercentage = (double)secondSelection.getVoteCount() / totalVote * 100;
+            secondSelection.setVotePercentage(String.format("%.2f%%", secondSelectionPercentage));
+
+            selectionRepository.save(firstSelection);
+            selectionRepository.save(secondSelection);
+
+            String firstPercentage = firstSelection.getVotePercentage();
+            String secondPercentage = secondSelection.getVotePercentage();
+
+            return UpdateVoteDto.builder()
+                    .updatedFirstVotePercentage(firstPercentage)
+                    .updatedSecondVotePercentage(secondPercentage)
+                    .build();
+        }
+        else { // 클릭한 선택지가 짝수이면
+            Selection secondSelection = selectionRepository.findById(selectionId).get();
+            Selection firstSelection = selectionRepository.findById(selectionId - 1).get();
+
+            // 두번째 선택지 update
+            secondSelection.setVoteCount(secondSelection.getVoteCount() + 1);
+
+            // 첫번째 선택지의 투표 비율 계산
+            double firstSelectionPercentage = (double)firstSelection.getVoteCount() / totalVote * 100;
+            firstSelection.setVotePercentage(String.format("%.2f%%", firstSelectionPercentage));
+
+            // 두번째 선택지 update
+            double secondSelectionPercentage = (double)secondSelection.getVoteCount() / totalVote * 100;
+            secondSelection.setVotePercentage(String.format("%.2f%%", secondSelectionPercentage));
+
+            selectionRepository.save(firstSelection);
+            selectionRepository.save(secondSelection);
+
+            String firstPercentage = firstSelection.getVotePercentage();
+            String secondPercentage = secondSelection.getVotePercentage();
+
+            return UpdateVoteDto.builder()
+                    .updatedFirstVotePercentage(firstPercentage)
+                    .updatedSecondVotePercentage(secondPercentage)
+                    .build();
+
+        }
+
     }
 
 }
