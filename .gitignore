@@ -36,6 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 
-### META-INF/persistence.xml, application.properties ###
+### META-INF/persistence.xml, application.properties, pki-validation ###
 src/main/resources/META-INF/persistence.xml
 src/main/resources/application.properties
+src/main/resources/keystore.p12
+src/main/resources/static/.well-known/pki-validation/29BC724198DE8AABCF52AF6937668467.txt
