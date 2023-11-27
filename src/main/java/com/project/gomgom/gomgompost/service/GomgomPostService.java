@@ -3,7 +3,6 @@ package com.project.gomgom.gomgompost.service;
 import com.project.gomgom.gomgompost.dto.GomgomPostAllResDto;
 import com.project.gomgom.gomgompost.dto.GomgomPostOneResDto;
 import com.project.gomgom.gomgompost.dto.GomgomPostReqDto;
-
 import java.util.Collection;
 
 public interface GomgomPostService {

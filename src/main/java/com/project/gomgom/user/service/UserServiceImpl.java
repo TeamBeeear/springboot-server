@@ -5,9 +5,9 @@ import com.project.gomgom.user.entity.User;
 import com.project.gomgom.user.repository.UserRepository;
 import com.project.gomgom.util.exception.CustomException;
 import com.project.gomgom.util.exception.ErrorCode;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

@@ -8,12 +8,12 @@ import com.project.gomgom.gomgompost.entity.GomgomPost;
 import com.project.gomgom.gomgompost.repository.GomgomPostRepository;
 import com.project.gomgom.util.exception.CustomException;
 import com.project.gomgom.util.exception.ErrorCode;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

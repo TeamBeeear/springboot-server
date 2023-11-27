@@ -1,17 +1,22 @@
 package com.project.gomgom.comment.controller;
 
 import com.project.gomgom.comment.dto.CommentGomgomReqDto;
-import com.project.gomgom.comment.dto.CommentUserReqDto;
 import com.project.gomgom.comment.dto.CommentResDto;
+import com.project.gomgom.comment.dto.CommentUserReqDto;
 import com.project.gomgom.comment.entity.Comment;
 import com.project.gomgom.comment.service.CommentServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import java.util.Collection;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/comment")

@@ -2,8 +2,8 @@ package com.project.gomgom.comment.service;
 
 import com.project.gomgom.board.repository.BoardRepository;
 import com.project.gomgom.comment.dto.CommentGomgomReqDto;
-import com.project.gomgom.comment.dto.CommentUserReqDto;
 import com.project.gomgom.comment.dto.CommentResDto;
+import com.project.gomgom.comment.dto.CommentUserReqDto;
 import com.project.gomgom.comment.entity.Comment;
 import com.project.gomgom.comment.repository.CommentRepository;
 import com.project.gomgom.gomgompost.entity.GomgomPost;
@@ -14,11 +14,11 @@ import com.project.gomgom.user.repository.UserRepository;
 import com.project.gomgom.util.exception.CustomException;
 import com.project.gomgom.util.exception.ErrorCode;
 import com.project.gomgom.util.formatter.TimeAgoFormatter;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

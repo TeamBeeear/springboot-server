@@ -1,8 +1,7 @@
 package com.project.gomgom.test.media;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.Collection;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface MediaService {
     MediaDescriptorDto saveFile(MultipartFile file);
