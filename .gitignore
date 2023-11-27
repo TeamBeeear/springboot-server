@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### META-INF/persistence.xml, application.properties ###
+/src/main/resources/META-INF/persistence.xml
+/src/main/resources/application.properties
