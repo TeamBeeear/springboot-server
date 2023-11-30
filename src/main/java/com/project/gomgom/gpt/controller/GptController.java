@@ -27,9 +27,7 @@ public class GptController {
     @PostMapping("gpt")
     @ApiOperation(value = "Chat GPT API", notes = "곰곰이 AI를 사용하면 호출합니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "{\n"
-                    + "    \"answer\": \"내일은 짜장면 어떠세요?\"\n"
-                    + "}")
+            @ApiResponse(code = 200, message = "GPT API가 정상적으로 호출됨", response = GptResDto.class)
     })
     public ResponseEntity<?> test(@RequestBody GptReqDto gptReqDto) {
         GptResDto result = gptService.getChatResponse(gptReqDto);

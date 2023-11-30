@@ -6,6 +6,7 @@ import com.project.gomgom.heart.entity.Heart;
 import com.project.gomgom.mediaimage.entity.MediaImage;
 import com.project.gomgom.post.entity.Post;
 import com.project.gomgom.vote.entity.Vote;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,9 +34,11 @@ import lombok.Setter;
 @Table(name = "USER")
 public class User {
 
+    @ApiModelProperty(notes = "사용자 아이디", example = "test1")
     @Id @Column(name = "user_id")
     private String userId;
 
+    @ApiModelProperty(notes = "사용자 비밀번호", example = "****")
     @Column(name = "user_pw", nullable = false)
     private String userPw;
 

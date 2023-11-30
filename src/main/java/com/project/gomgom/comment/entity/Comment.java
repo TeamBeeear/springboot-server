@@ -37,10 +37,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class Comment {
 
+    @ApiModelProperty(notes = "댓글 기본키", example = "1")
     @Id @Column(name = "comment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
+    @ApiModelProperty(notes = "사용자 정보")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -61,6 +63,7 @@ public class Comment {
     private MediaImage image;
 
     @Column(name = "content", columnDefinition = "TEXT")
+    @ApiModelProperty(notes = "댓글 내용", example = "댓글을 작성하는 예시입니다.")
     private String content;
 
     @CreatedDate

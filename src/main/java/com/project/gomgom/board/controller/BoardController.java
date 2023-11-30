@@ -4,6 +4,8 @@ import com.project.gomgom.board.dto.BoardDto;
 import com.project.gomgom.board.service.BoardServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,9 @@ public class BoardController {
 
     @PostMapping("board")
     @ApiOperation(value = "게시판 생성", notes = "관리자가 게시판을 생성할 때 호출합니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "게시판이 정상적으로 생성됨", response = BoardDto.class)
+    })
     public ResponseEntity<?> createBoard(@RequestBody BoardDto boardDto) {
 
         try {
@@ -37,6 +42,9 @@ public class BoardController {
 
     @GetMapping("board")
     @ApiOperation(value = "게시판 조회", notes = "생성된 게시판의 이름을 조회할 때 호출합니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "게시판이 정상적으로 조회됨", response = Collection.class)
+    })
     public ResponseEntity<?> readBoardAll() {
 
         try {
