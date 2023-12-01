@@ -13,6 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GptReqDto {
-    @ApiModelProperty(notes = "질문", example = "내일 점심 뭐 먹지?")
+    @ApiModelProperty(value = "질문", example = "내일 점심 뭐 먹지?")
     private String question;
 }

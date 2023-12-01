@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GomgomPostReqDto {
-    @ApiModelProperty(notes = "곰곰이 게시글 제목", example = "곰곰이 게시글 제목입니다.")
+    @ApiModelProperty(value = "곰곰이 게시글 제목", example = "곰곰이 게시글 제목입니다.")
     private String title;
-    @ApiModelProperty(notes = "곰곰이 게시글 내용", example = "곰곰이 게시글 내용입니다.")
+    @ApiModelProperty(value = "곰곰이 게시글 내용", example = "곰곰이 게시글 내용입니다.")
     private String content;
 }

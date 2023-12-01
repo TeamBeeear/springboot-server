@@ -64,7 +64,7 @@ public class CommentController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "댓글이 정상적으로 조회됨", response = Collection.class)
     })
-    public ResponseEntity<?> readGomgomPostComments(@PathVariable("gomgomPostId") @ApiParam(value = "곰곰이 게시글 기본키") Long gomgomPostId) {
+    public ResponseEntity<?> readGomgomPostComments(@PathVariable("gomgomPostId") @ApiParam(value = "곰곰이 게시글 기본키", example = "1") Long gomgomPostId) {
         Collection<CommentResDto> result = commentService.readGomgomPostComments(gomgomPostId);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
