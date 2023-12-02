@@ -10,10 +10,10 @@ import lombok.Setter;
 @Builder
 public class UserDto {
 
-    @ApiModelProperty(notes = "사용자 아이디", example = "ThisIsAccount")
+    @ApiModelProperty(notes = "사용자 아이디", example = "test1")
     private String userId;
 
-    @ApiModelProperty(notes = "사용자 비밀번호", example = "ThisIsPw1234")
+    @ApiModelProperty(notes = "사용자 비밀번호", example = "1234")
     private String userPw;
 
     public UserDto passwordMasked() {

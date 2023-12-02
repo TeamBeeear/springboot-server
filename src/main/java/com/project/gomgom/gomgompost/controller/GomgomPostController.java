@@ -31,7 +31,7 @@ public class GomgomPostController {
     @PostMapping
     @ApiOperation(value = "곰곰이 게시글 생성", notes = "관리자가 곰곰이 게시글을 생성할 때 호출합니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "댓글이 정상적으로 등록됨") // 200인 경우 빈 응답 반환
+            @ApiResponse(code = 200, message = "곰곰이 게시글이 정상적으로 생성됨") // 빈 응답 반환
     })
     public ResponseEntity<?> createPost(@RequestBody GomgomPostReqDto gomgomPostReqDto) {
         gomgomPostService.createPost(gomgomPostReqDto);
@@ -41,7 +41,7 @@ public class GomgomPostController {
     @GetMapping("all")
     @ApiOperation(value = "곰곰이 모든 게시글 조회", notes = "곰곰이의 모든 게시글을 조회할 때 호출합니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "게시글이 정상적으로 조회됨", response = Collection.class)
+            @ApiResponse(code = 200, message = "곰곰이 게시글이 정상적으로 조회됨", responseContainer = "List", response = GomgomPostAllResDto.class)
     })
     public ResponseEntity<?> readAllPost() {
         Collection<GomgomPostAllResDto> result = gomgomPostService.readAllPost();
@@ -51,7 +51,7 @@ public class GomgomPostController {
     @GetMapping("{gomgomPostId}")
     @ApiOperation(value = "곰곰이 상세 게시글 조회", notes = "곰곰이의 게시글을 조회할 때 호출합니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "게시글이 정상적으로 조회됨", response = GomgomPostOneResDto.class)
+            @ApiResponse(code = 200, message = "곰곰이 게시글이 정상적으로 조회됨", response = GomgomPostOneResDto.class)
     })
     public ResponseEntity<?> readOnePost(@PathVariable("gomgomPostId") @ApiParam(value = "곰곰이 게시글 기본키", example = "1") Long id) {
         GomgomPostOneResDto result = gomgomPostService.readOnePost(id);

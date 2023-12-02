@@ -52,7 +52,7 @@ public class CommentController {
     @GetMapping("{boardId}/{postId}")
     @ApiOperation(value = "사용자 게시글의 댓글 조회", notes = "사용자의 게시글에 등록된 댓글을 볼 때 호출합니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "댓글이 정상적으로 조회됨", response = Collection.class)
+            @ApiResponse(code = 200, message = "댓글이 정상적으로 조회됨", responseContainer = "List", response = CommentResDto.class)
     })
     public ResponseEntity<?> readUserPostComments(@PathVariable("boardId") @ApiParam(value = "게시판 기본키", example = "1") Long boardId, @PathVariable("postId") @ApiParam(value = "사용자 게시글 기본키", example = "1") Long postId) {
         Collection<CommentResDto> result = commentService.readUserPostComments(boardId, postId);
@@ -62,7 +62,7 @@ public class CommentController {
     @GetMapping("{gomgomPostId}")
     @ApiOperation(value = "곰곰이 게시글의 댓글 조회", notes = "곰곰이 게시글에 등록된 댓글을 볼 때 호출합니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "댓글이 정상적으로 조회됨", response = Collection.class)
+            @ApiResponse(code = 200, message = "댓글이 정상적으로 조회됨", responseContainer = "List", response = CommentResDto.class)
     })
     public ResponseEntity<?> readGomgomPostComments(@PathVariable("gomgomPostId") @ApiParam(value = "곰곰이 게시글 기본키", example = "1") Long gomgomPostId) {
         Collection<CommentResDto> result = commentService.readGomgomPostComments(gomgomPostId);

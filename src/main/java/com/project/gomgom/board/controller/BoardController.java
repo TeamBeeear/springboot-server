@@ -43,7 +43,7 @@ public class BoardController {
     @GetMapping("board")
     @ApiOperation(value = "게시판 조회", notes = "생성된 게시판의 이름을 조회할 때 호출합니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "게시판이 정상적으로 조회됨", response = Collection.class)
+            @ApiResponse(code = 200, message = "게시판이 정상적으로 조회됨", responseContainer = "List", response = BoardDto.class)
     })
     public ResponseEntity<?> readBoardAll() {
 

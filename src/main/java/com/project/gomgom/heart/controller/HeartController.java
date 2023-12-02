@@ -29,7 +29,7 @@ public class HeartController {
     @GetMapping("{userId}/{postId}")
     @ApiOperation(value = "좋아요 상태 보여주기", notes = "사용자가 게시글을 좋아요를 여부를 확인할 때 호출합니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "좋아요 조회가 성공적으로 수행됨")
+            @ApiResponse(code = 200, message = "좋아요 조회가 성공적으로 수행됨", response = Boolean.class)
     })
     public ResponseEntity<?> getHeartStatus(@PathVariable("userId") String userId, @PathVariable("postId") Long postId) {
         return ResponseEntity.status(HttpStatus.OK).body(heartService.getHeartStatus(userId, postId));
@@ -39,7 +39,7 @@ public class HeartController {
     @PostMapping
     @ApiOperation(value = "좋아요 누르기", notes = "좋아요를 누른 경우 호출합니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "좋아요"),
+            @ApiResponse(code = 200, message = "좋아요가 정상적으로 실행됨"),
             @ApiResponse(code = 400, message = "{\n"
                     + "    \"status\": 400,\n"
                     + "    \"code\": \"ALREADY_HEARTED\",\n"
@@ -60,7 +60,7 @@ public class HeartController {
     @DeleteMapping
     @ApiOperation(value = "좋아요 취소하기", notes = "좋아요 취소를 누른 경우 호출됩니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "좋아요"),
+            @ApiResponse(code = 200, message = "좋아요 취소가 정상적으로 실행됨"),
             @ApiResponse(code = 400, message = "{\n"
                     + "    \"status\": 400,\n"
                     + "    \"code\": \"EMPTY_HEARTED\",\n"
