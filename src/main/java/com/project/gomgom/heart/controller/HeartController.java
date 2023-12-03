@@ -39,17 +39,7 @@ public class HeartController {
     @PostMapping
     @ApiOperation(value = "좋아요 누르기", notes = "좋아요를 누른 경우 호출합니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "좋아요가 정상적으로 실행됨"),
-            @ApiResponse(code = 400, message = "{\n"
-                    + "    \"status\": 400,\n"
-                    + "    \"code\": \"ALREADY_HEARTED\",\n"
-                    + "    \"message\": \"좋아요가 이미 눌러져 있습니다.\"\n"
-                    + "}"),
-            @ApiResponse(code = 404, message = "{\n"
-                    + "    \"status\": 404,\n"
-                    + "    \"code\": \"USER_NOT_FOUND || POST_NOT_FOUND,\n"
-                    + "    \"message\": \"존재하지 않는 아이디입니다. || 존재하지 않는 게시글입니다.\"\n"
-                    + "}"),
+            @ApiResponse(code = 200, message = "좋아요가 정상적으로 실행됨")
     })
     public ResponseEntity<?> insertHeart(@RequestBody HeartDto heartDto) {
         heartService.insertHeart(heartDto);
@@ -60,17 +50,7 @@ public class HeartController {
     @DeleteMapping
     @ApiOperation(value = "좋아요 취소하기", notes = "좋아요 취소를 누른 경우 호출됩니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "좋아요 취소가 정상적으로 실행됨"),
-            @ApiResponse(code = 400, message = "{\n"
-                    + "    \"status\": 400,\n"
-                    + "    \"code\": \"EMPTY_HEARTED\",\n"
-                    + "    \"message\": \"좋아요가 이미 취소 상태입니다.\"\n"
-                    + "}"),
-            @ApiResponse(code = 404, message = "{\n"
-                    + "    \"status\": 404,\n"
-                    + "    \"code\": \"USER_NOT_FOUND || POST_NOT_FOUND,\n"
-                    + "    \"message\": \"존재하지 않는 아이디입니다. || 존재하지 않는 게시글입니다.\"\n"
-                    + "}"),
+            @ApiResponse(code = 200, message = "좋아요 취소가 정상적으로 실행됨")
     })
     public ResponseEntity<?> deleteHeart(@RequestBody HeartDto heartDto) {
         heartService.deleteHeart(heartDto);
