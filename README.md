@@ -9,3 +9,4 @@
 <br>
 
 ### API DOC
+https://github.com/TeamBeeear/springboot-server/blob/main/api-docs.pdf
